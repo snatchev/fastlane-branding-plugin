@@ -33,20 +33,6 @@ You worked hard on your app, so show some pride and see your app's icon during t
 
 This plugin makes use of [branding.rb](https://github.com/snatchev/branding.rb) to render your AppIcon in glorious hi-res 240 colors!
 
-
-
-## Example
-
-
-````
-rake
-```
-
-To automatically fix many of the styling issues, use 
-```
-rubocop -a
-```
-
 ## Issues and Feedback
 
 For any other issues and feedback about this plugin, please submit it to this repository.
