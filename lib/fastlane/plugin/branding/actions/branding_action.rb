@@ -4,12 +4,14 @@ module Fastlane
   module Actions
     class BrandingAction < Action
       def self.run(params)
-        rows, cols = Branding::Canvas.terminal_size
+        rows, cols = ::Branding::Canvas.terminal_size
         ideal_width = cols / 6
-        path = best_icon(ideal_width)
-        logo = Branding::Logo.new(path)
-        logo.algo = :hires
-        logo.print
+        if path = best_icon(ideal_width)
+          logo = ::Branding::Logo.new(path)
+          logo.algo = :hires
+          logo.print
+          puts
+        end
       end
 
       def self.description
@@ -37,10 +39,10 @@ module Fastlane
       end
 
       def self.best_icon(ideal_width)
-        icon_paths = Dir.glob("**/AppIcon.iconset/*.png").map(&File.method(:realpath))
+        icon_paths = Dir.glob("**/AppIcon.appiconset/*.png").map(&File.method(:realpath))
 
         paths = icon_paths.sort_by do |path|
-          png = PNG.from_file(path)
+          png = ::Branding::PNG.from_file(path)
           (ideal_width - png.width).abs
         end
 
