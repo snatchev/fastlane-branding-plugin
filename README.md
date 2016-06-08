@@ -4,6 +4,8 @@
 
 Render your App's icon to the terminal whenever you run fastlane!
 
+[![asciicast](https://asciinema.org/a/6xe3kkh6a6qm5v8awvp08fm3q.png)](https://asciinema.org/a/6xe3kkh6a6qm5v8awvp08fm3q)
+
 _Serious Branding!_
 
 ## Getting Started
