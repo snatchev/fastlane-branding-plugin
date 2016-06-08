@@ -1,8 +1,15 @@
+require 'branding'
+
 module Fastlane
   module Actions
     class BrandingAction < Action
       def self.run(params)
-        UI.message("The branding plugin is working!")
+        rows, cols = Branding::Canvas.terminal_size
+        ideal_width = cols / 6
+        path = best_icon(ideal_width)
+        logo = Branding::Logo.new(path)
+        logo.algo = :hires
+        logo.print
       end
 
       def self.description
@@ -26,9 +33,22 @@ module Fastlane
       def self.is_supported?(platform)
         # Adjust this if your plugin only works for a particular platform (iOS vs. Android, for example)
         # See: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
-        #
-        # [:ios, :mac, :android].include?(platform)
-        true
+        [:ios, :mac].include?(platform)
+      end
+
+      def self.best_icon(ideal_width)
+        icon_paths = Dir.glob("**/AppIcon.iconset/*.png").map(&File.method(:realpath))
+
+        paths = icon_paths.sort_by do |path|
+          png = PNG.from_file(path)
+          (ideal_width - png.width).abs
+        end
+
+        if paths.empty?
+          nil
+        else
+          paths.first
+        end
       end
     end
   end
