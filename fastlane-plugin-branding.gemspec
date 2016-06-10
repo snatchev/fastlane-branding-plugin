@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = %q{snatchev@twitter.com}
 
   spec.summary       = %q{Add some branding to your fastlane output}
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-branding"
+  spec.homepage      = "https://github.com/snatchev/fastlane-branding-plugin"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
