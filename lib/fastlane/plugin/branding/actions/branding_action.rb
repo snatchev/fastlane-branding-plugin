@@ -5,10 +5,11 @@ module Fastlane
     class BrandingAction < Action
       def self.run(params)
         rows, cols = ::Branding::Canvas.terminal_size
-        ideal_width = cols / 6
+        ideal_width = cols / 3
+
         if path = best_icon(ideal_width)
           logo = ::Branding::Logo.new(path)
-          logo.algo = :hires
+          logo.algo = :normal
           logo.print
           puts
         end
