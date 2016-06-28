@@ -1,7 +1,7 @@
 # branding plugin
 
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-branding)
-[![gem version](https://badge.fury.io/rb/fastlane-plugin-branding.svg)]
+![gem version](https://badge.fury.io/rb/fastlane-plugin-branding.svg)
 
 
 Render your App's icon to the terminal whenever you run fastlane!
