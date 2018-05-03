@@ -20,11 +20,18 @@ fastlane add_plugin branding
 
 Once you've added the plugin, add the `branding` action to your `Fastfile`.
 Like this:
-
 ```ruby
 platform :ios do
   before_all do
     branding
+  end
+end
+```
+or:
+```ruby
+platform :android do
+  before_all do
+    branding(brand_icon_path: "./resources/**/icon.*")
   end
 end
 ```
