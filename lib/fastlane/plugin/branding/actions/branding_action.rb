@@ -7,7 +7,7 @@ module Fastlane
         rows, cols = ::Branding::Canvas.terminal_size
         ideal_width = cols / 3
 
-        if path = best_icon(ideal_width)
+        if path = best_icon(params[:brand_icon_path], ideal_width)
           logo = ::Branding::Logo.new(path)
           logo.algo = :normal
           logo.print
@@ -25,22 +25,22 @@ module Fastlane
 
       def self.available_options
         [
-          # FastlaneCore::ConfigItem.new(key: :your_option,
-          #                         env_name: "BRANDING_YOUR_OPTION",
-          #                      description: "A description of your option",
-          #                         optional: false,
-          #                             type: String)
+          FastlaneCore::ConfigItem.new(key: :brand_icon_path,
+                                  env_name: "BRAND_ICON_PATH",
+                               description: "specific path to icon",
+                                  optional: true,
+                                      type: String)
         ]
       end
 
       def self.is_supported?(platform)
         # Adjust this if your plugin only works for a particular platform (iOS vs. Android, for example)
         # See: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
-        [:ios, :mac].include?(platform)
+        [:ios, :mac, :android].include?(platform)
       end
 
-      def self.best_icon(ideal_width)
-        icon_paths = Dir.glob("**/AppIcon.appiconset/*.png").map(&File.method(:realpath))
+      def self.best_icon(brand_icon_path = "**/AppIcon.appiconset/*.png", ideal_width)
+        icon_paths = Dir.glob(brand_icon_path).map(&File.method(:realpath))
 
         paths = icon_paths.sort_by do |path|
           png = ::Branding::PNG.from_file(path)
