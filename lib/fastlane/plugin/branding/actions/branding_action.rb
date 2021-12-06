@@ -11,7 +11,7 @@ module Fastlane
           logo = ::Branding::Logo.new(path)
           logo.algo = :normal
           logo.print
-          puts
+          puts "\e[0m"
         end
       end
 
@@ -39,15 +39,25 @@ module Fastlane
         [:ios, :mac, :android].include?(platform)
       end
 
-      def self.best_icon(brand_icon_path = "**/AppIcon.appiconset/*.png", ideal_width)
-        icon_paths = Dir.glob(brand_icon_path).map(&File.method(:realpath))
+      def self.best_icon(brand_icon_path, ideal_width)
+        icon_paths = Dir.glob(brand_icon_path || "**/AppIcon.appiconset/*.png").map(&File.method(:realpath))
 
-        paths = icon_paths.sort_by do |path|
+        paths = icon_paths.filter do |path|
+          begin
+            png = ::Branding::PNG.from_file(path)
+            true
+          rescue NotImplementedError => err
+            false
+          end
+        end
+
+        paths = paths.sort_by do |path|
           png = ::Branding::PNG.from_file(path)
           (ideal_width - png.width).abs
         end
 
         if paths.empty?
+          puts "No branding image found. Only true color is supported at the moment, so check the color depth of your images and try again."
           nil
         else
           paths.first
